@@ -30,7 +30,3 @@ class Calculator {
         return numbers.reduce((acc, current) => acc / current)
     }
 }
-
-const calc = new Calculator
-
-console.log(calc.operate('+', [2,2]))
