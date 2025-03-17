@@ -1,55 +1,115 @@
 class Calculator {
-    operate(input) {
-        const [operator, numbers] = this.getOperatorFromInput(input)
+    constructor() {
+        this.num1 = ''
+        this.operator = ''
+        this.num2 = ''
+    }
 
-        switch(operator) {
+    operate() {
+        this.convertNumsToNumbers()
+
+        switch(this.operator) {
             case '+':
-                return this.add(numbers)
+                return this.add()
             case '-':
-                return this.subtract(numbers)
+                return this.subtract()
             case '*':
-                return this.multiply(numbers)
+                return this.multiply()
             case '/':
-                return this.divide(numbers)
+                return this.divide()
             default:
                 return
         }
     }
 
-    getOperatorFromInput(input) {
-        if (input.includes('+')) {
-            return ['+', input.split('+').map(num => Number(num))]
-        } else if (input.includes('-')) {
-            return ['-', input.split('-').map(num => Number(num))]
-        } else if (input.includes('*')) {
-            return ['*', input.split('*').map(num => Number(num))]
-        } else if (input.includes('/')) {
-            return ['/', input.split('/').map(num => Number(num))]
-        } else {
-            return ''
-        }
+    add() {
+        return this.num1 + this.num2
     }
 
-    add(numbers) {
-        return numbers.reduce((acc, current) => acc + current, 0)
+    subtract() {
+        return this.num1 - this.num2
     }
 
-    subtract(numbers) {
-        return numbers.reduce((acc, current) => acc - current)
+    multiply() {
+        return this.num1 * this.num2
     }
 
-    multiply(numbers) {
-        return numbers.reduce((acc, current) => acc * current, 1)
+    divide() {
+        return this.num1 / this.num2
     }
 
-    divide(numbers) {
-        return numbers.reduce((acc, current) => acc / current)
+    num1HasValue() {
+        return this.num1 != ''
+    }
+
+    num2HasValue() {
+        return this.num2 != ''
+    }
+
+    hasOperator() {
+        return this.operator != ''
+    }
+
+    convertNumsToNumbers() {
+        this.num1 = Number(this.num1)
+        this.num2 = Number(this.num2)
+    }
+
+    clear() {
+        this.num1 = ''
+        this.operator = ''
+        this.num2 = ''
     }
 }
 
-function operate() {
-    const input = document.querySelector("input")
-    const calculator = new Calculator()
+const calculator = new Calculator()
+const inputDisplay = document.querySelector('input')
 
-    input.value = calculator.operate(input.value)
+function setInputDisplay(value=`${calculator.num1}${calculator.operator}${calculator.num2}`) {
+    inputDisplay.value = value
+}
+
+function addDigit(digit) {
+    if (calculator.num1HasValue() && calculator.hasOperator()) {
+        if (digit == '.' && calculator.num2.includes('.')) {
+            return
+        }
+
+        calculator.num2 += digit
+    }
+    else {
+        if (digit == '.' && calculator.num1.includes('.')) {
+            return
+        }
+
+        calculator.num1 += digit
+    }
+    setInputDisplay()
+}
+
+function addOperator(operator) {
+    if (calculator.num1HasValue()) {
+        calculator.operator = operator
+    }
+    else if (calculator.num1HasValue() && calculator.num2HasValue()) {
+        calculator.operate()
+    }
+    setInputDisplay()
+}
+
+function clearInput() {
+    calculator.clear()
+    setInputDisplay()
+}
+
+function operate() {
+    if (calculator.num1HasValue() && calculator.num2HasValue()) {
+        let total = calculator.operate()
+        if (String(total).length > 5) {
+            total = total.toFixed(3)
+        }
+        setInputDisplay(total)
+        calculator.clear()
+        
+    }
 }

@@ -1,19 +1,23 @@
-html {
-    background-color: rgb(9, 9, 9);
-    color: white;
+body {
+    background-color: #222323;
+    color: #f0f6f0;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 25%;
+    margin: 10% 25%;
 }
 
 input {
+    font-size: 24px;
     text-align: end;
-    border: none;
-    background-color: white;
+    border: 5px solid #222323;
+    border-radius: 10px;
+    background-color: #f0f6f0;
     color: rgb(9, 9, 9);
     padding: 30px;
     margin-bottom: 30px;
@@ -21,15 +25,19 @@ input {
 }
 
 button {
-    width: 25%;
+    flex: 0 1 25%;
     height: 100px;
-    border: none;
-    border-radius: 30px;
-    background-color: white;
+    border: 5px solid #222323;
+    border-radius: 10px;
+    background-color: #f0f6f0;
     color: rgb(9, 9, 9);
     font-size: 20px;
 }
 
 button:hover {
-    background-color: grey;
+    background-color: #bac0ba;
+}
+
+#zero {
+    flex-grow: 2;
 }
